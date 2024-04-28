@@ -1,7 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.models.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import {deleteOnCloudinary, uploadOnCloudinary} from "../utils/cloudinary.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 
 
@@ -35,11 +35,11 @@ const registerUser= async (req,res)=>{
          field?.trim()===" "
      }))
      {
-     throw new ApiError(400)
+     throw new ApiError(400,"enter all fields")
  
     
      }
- 
+    //  console.log(username,fullname,email)
      const existingUser=await User.findOne({
          $or:[{email},{username}]
      })
@@ -49,10 +49,13 @@ const registerUser= async (req,res)=>{
 
         
      }
+     console.log(existingUser)
     
      const avatarLocalPath=req.file?.path
  
-     if(!avatarLocalPath) throw new ApiError(400,"avatar file not found")
+     if(!avatarLocalPath) 
+     {throw new ApiError(400,"avatar file not found")
+    }
      
      console.log(avatarLocalPath)
  
@@ -74,10 +77,10 @@ const registerUser= async (req,res)=>{
          fullname:fullname,
          email:email,
          password:password,
-         avatar:avatar.url
+         avatar:avatar.url || ""
  
      })
- 
+     console.log(user)
  
     const createdUser=await User.findById(user._id).select(
      "-password -refreshToken"
@@ -102,19 +105,17 @@ const registerUser= async (req,res)=>{
 }
 
 const logInUser =async(req,res)=>{
-    //username or email,password
-    //check fields are not empty
-    //check username exists or not
-    //check password is right or not
-     //aaccess token generate
-    //refresh token generate
-    //send cookies
-    //login
-   
-    const {username,email,password}=req.body
-    if(!(username ||  email)) throw new ApiError(400,"username or email is required")
 
    
+    const {username,email,password}=req.body
+    if(!(username ||  email)) 
+    {throw new ApiError(400,"username or email is required")
+}
+
+   if(!password)
+   {
+    throw new ApiError(400,"password is required")
+   }
 
 
     const user=await User.findOne({
@@ -124,7 +125,8 @@ const logInUser =async(req,res)=>{
     {
         throw new ApiError(400,"user doesn't exist")
     }
-    // if(!password) throw new ApiError(400,"enter password")
+
+
 
 const isPasswordValid = await user.isPasswordCorrect(password)
     console.log(isPasswordValid)
@@ -246,12 +248,13 @@ const updateDetails=asyncHandler(async(req,res)=>{
 const updateAvatar=asyncHandler(async(req,res)=>{
     
     const avatarLocalPath = req.file?.path
+    const avatarUrl=req.user.avatar
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is missing")
     }
 
-    //TODO: delete old image - assignment
+    
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     console.log(avatar)
@@ -271,6 +274,10 @@ const updateAvatar=asyncHandler(async(req,res)=>{
         {new: true}
     ).select("-password")
 
+  const deleteImage= await deleteOnCloudinary(avatarUrl)
+  console.log(deleteImage)
+   
+
     return res
     .status(200)
     .json(
@@ -278,7 +285,13 @@ const updateAvatar=asyncHandler(async(req,res)=>{
     )
 })
 
-export {registerUser,logOutUser,logInUser,updatePassword,updateDetails,updateAvatar}
+const deleteUser=asyncHandler(async (req,res)=>{
+    const user=req.user
+    const deletedUser=await User.findOneAndDelete(user._id)
+    console.log(deletedUser)
+    res.status(200).json(new ApiResponse(200,deletedUser,"user deleted successfully"))
+})
+export {registerUser,logOutUser,logInUser,updatePassword,updateDetails,updateAvatar,deleteUser}
 
 
 
