@@ -98,8 +98,8 @@ const getAllPost = asyncHandler(async (req, res) => {
  
 
  
-   if (sortType === "desc") {
-     sort = -1;
+   if (sortType) {
+    sortType==="desc"?sort=-1:sort=1
    }
  
    if (sortBy) {
@@ -134,5 +134,50 @@ const getAllPost = asyncHandler(async (req, res) => {
   res.status(500).json(new ApiResponse(500,error,"something went wrong while searching document"))
  }
 });
+const getAllMyPost=asyncHandler(async (req,res)=>{
+  let {userId} = req.user._id;
+ 
+   let sort = 1;
+   let sortByField = "title";
+   
 
-export { createPost, getPost, deletePost, updatePost, getAllPost };
+ 
+  //  if (sortType === "desc") {
+  //    sort = -1;
+  //  }
+ 
+   
+ 
+   console.log(sortByField, sort);
+   try {
+    const userId = req.user._id;
+  
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          author: userId
+        }
+      },
+      {
+        $sort: {
+          [sortByField]: sort
+        }
+      }
+    ]);
+  
+    console.log("User's Posts:", posts); 
+    res.status(200).json({success:true,data:posts,total:posts.length});
+    
+  }
+   catch (error) {
+    console.error("Error fetching user's posts:", error); 
+    res.status(500).json(new ApiResponse(500,error,"error fetching user's posts"));
+  }
+  
+
+   console.log(post);
+   res.status(200).json(new ApiResponse(200,post,"search result found"))
+
+})
+
+export { createPost, getPost, deletePost, updatePost, getAllPost,getAllMyPost};
