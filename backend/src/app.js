@@ -20,10 +20,13 @@ app.use(cookieParser())
 
 import userRouter from "./routes/user.routes.js"
 import postRouter from "./routes/post.routes.js"
+import likeRouter from "./routes/like.routes.js"
+import commentRouter from "./routes/comment.routes.js"
 
 //routes declaration
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/post",postRouter)
- 
+app.use("/api/v1/post",likeRouter)
+ app.use("/api/v1/post",commentRouter)
 
 export {app}
