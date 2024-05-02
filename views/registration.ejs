@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e7998368e6.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="\styles\style.css" type="text/css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login">
+        <form action="/api/v1/users/register" method="post">
+          <div class="container-header"><h2>Sign Up a New Account</h2></div>
+
+          <div class="input-container">
+            <label for="email">Email</label><br />
+
+            <input
+              type="text "
+              name="email"
+              class="form-control glowing-border"
+              placeholder="enter your email"
+              autocomplete="off"
+              required
+            />
+
+            <label for="username">username</label><br />
+
+            <input
+              type="text "
+              name="username"
+              class="form-control glowing-border"
+              placeholder="enter your username"
+              autocomplete="off"
+              required
+            />
+
+            <label for="fullname">fullname</label><br />
+
+            <input
+              type="text"
+              name="fullname"
+              class="form-control glowing-border"
+              placeholder="enter your full name"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div class="input-container email-icon">
+            <label for="password">Password</label>
+            
+            <input
+            name="password"
+              type="password"
+              class="form-control glowing-border"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">Sign UP</button>
+        </form>
+      </div>
+      <div class="login-footer">
+        <h2>or continue with</h2>
+
+        <div class="logo-line">
+          <img class="login-icon" src="\images\OIP.jfif" alt="Google Logo" />
+          <img
+            class="login-icon"
+            src="\images\facebook.jfif"
+            alt="Facebook Logo"
+          />
+        </div>
+        <h3>
+          Already have an Account <a href="login">Sign in Here</a>
+        </h3>
+      </div>
+    </div>
+  </body>
+</html>

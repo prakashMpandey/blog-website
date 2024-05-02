@@ -1,6 +1,10 @@
 import express, { json } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import ejs from "ejs";
+
+
+
 
 const app=express();
 
@@ -12,10 +16,12 @@ app.use(json({
     limit:"16kb"
 }))
 app.use(express.urlencoded({extended:true,limit:"10kb"}))
-app.use(express.static('punlic'))
+
 app.use(cookieParser())
+app.set("view engine","ejs")
+app.use(express.static("public"))
 
-
+app.set("views","views")
 //routes
 
 import userRouter from "./routes/user.routes.js"

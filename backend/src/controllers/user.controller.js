@@ -8,6 +8,7 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 
 const generateAccessAndRefreshToken=async (userId)=>{
     try {
+        
 
         const user=await User.findById(userId)
         const accessToken=user.generateAccessToken()
@@ -26,10 +27,12 @@ const generateAccessAndRefreshToken=async (userId)=>{
 }
 
 
-const registerUser= async (req,res)=>{
+const registerUser=asyncHandler( async (req,res)=>{
    try {
+    
+
       const {username,fullname,email,password}= req.body
- 
+      console.log(req.body)
      if(
          [username,fullname,email,password].some((field)=>{
          field?.trim()===" "
@@ -51,21 +54,21 @@ const registerUser= async (req,res)=>{
      }
      console.log(existingUser)
     
-     const avatarLocalPath=req.file?.path
+    //  const avatarLocalPath=req.file?.path
  
-     if(!avatarLocalPath) 
-     {throw new ApiError(400,"avatar file not found")
-    }
+    //  if(!avatarLocalPath) 
+    //  {throw new ApiError(400,"avatar file not found")
+    // }
      
-     console.log(avatarLocalPath)
+    //  console.log(avatarLocalPath)
  
-     const avatar = await uploadOnCloudinary(avatarLocalPath)
+    //  const avatar = await uploadOnCloudinary(avatarLocalPath)
      
-     console.log(avatar)
-     if(!avatar)
-     {
-         throw new ApiError(500,"avatar  not found")
-     }
+    //  console.log(avatar)
+    //  if(!avatar)
+    //  {
+    //      throw new ApiError(500,"avatar  not found")
+    //  }
   
  
  
@@ -77,7 +80,7 @@ const registerUser= async (req,res)=>{
          fullname:fullname,
          email:email,
          password:password,
-         avatar:avatar.url || ""
+         avatar: ""                   //avatar.url ||
  
      })
      console.log(user)
@@ -94,7 +97,10 @@ const registerUser= async (req,res)=>{
      
  }
  console.log(createdUser)
- return res.status(200).json(new ApiResponse(200,createdUser,"user created successfully"))
+ return res.status(200).json(new ApiResponse(200, createdUser, "User created successfully"));
+
+ res.redirect("login")
+
  
  }
     catch (error) {
@@ -102,12 +108,24 @@ const registerUser= async (req,res)=>{
     
    }
    
-}
+})
 
 const logInUser =async(req,res)=>{
 
    
-    const {username,email,password}=req.body
+    const {input,password}=req.body
+    let email,username;
+    if(input.indexOf("@")===-1)
+    {
+        username=input
+      
+        
+    }
+    else{
+        email=input;
+        
+    }
+    
     if(!(username ||  email)) 
     {throw new ApiError(400,"username or email is required")
 }
