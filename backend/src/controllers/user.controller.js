@@ -97,9 +97,10 @@ const registerUser=asyncHandler( async (req,res)=>{
      
  }
  console.log(createdUser)
- return res.status(200).json(new ApiResponse(200, createdUser, "User created successfully"));
+ return res.status(200).render("home",{user})
+ res.redirect("login");
+ 
 
- res.redirect("login")
 
  
  }
@@ -141,8 +142,8 @@ const logInUser =async(req,res)=>{
     })
     if(!user)
     {
-        throw new ApiError(400,"user doesn't exist")
-    }
+       res.json({message:"wrong username or password"})
+    } 
 
 
 
@@ -163,9 +164,8 @@ const isPasswordValid = await user.isPasswordCorrect(password)
    }
    return res.status(200)
    .cookie("accessToken",accessToken,options).cookie("refresh TOken",refreshToken,options)
-   .json(new ApiResponse(200,{
-    user:loggedInUser
-   },"user logged in successfully"))
+   .render("home",{user})
+
 }
 
 const logOutUser=async(req,res)=>{
@@ -185,7 +185,7 @@ const logOutUser=async(req,res)=>{
     secure:true
    }
 
-   res.status(200).clearCookie("accessToken",options).clearCookie("refreshToken",options).json(new ApiResponse(200,{},"user llogged out successfully"))
+   res.status(200).clearCookie("accessToken",options).clearCookie("refreshToken",options).render("login")
 
     
 }
@@ -250,10 +250,9 @@ const updateDetails=asyncHandler(async(req,res)=>{
             res.json(new ApiResponse(400,"no field specified"))
     
         }
-        const user=await User.findByIdAndUpdate(req.user._id,{$set:{fullname,email:email,username}},{new:true,password:0,refreshToken:0})
-    
-    
-        console.log(user.email,user.fullname);
+        const user=await User.findByIdAndUpdate(req.user._id,{$set:{fullname,email:email,username:username}},{new:true,password:0,refreshToken:0})
+        console.log(user)
+        console.log(user.username,user.email,user.fullname);
     
         return res.status(200).json(new ApiResponse(200,user,"details changed successfully"))
     } 

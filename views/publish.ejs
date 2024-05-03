@@ -1,0 +1,19 @@
+<%- include("header") -%>
+
+<div class="Publishcontainer">
+    <div class="publish-container max-width-1" background-color="blue">
+        <form action="/api/v1/post/publish" method="post">
+            <div class="form-group">
+                <label for="publish-title">Title:</label>
+                <input type="text" id="publish-title" name="title" placeholder="Enter title...">
+            </div>
+            <div class="form-group">
+                <label for="publish-content">Content:</label>
+                <textarea name="content" id="publish-content" placeholder="What's in your mind?" rows="5"></textarea>
+            </div>
+            <button type="submit" id="publish-btn" >submit </button>
+        </form>
+        
+
+   </div>
+</div>

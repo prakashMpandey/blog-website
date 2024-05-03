@@ -38,7 +38,8 @@ const getPost = asyncHandler(async (req, res) => {
   }
   const post = await Post.findById(postId);
   console.log(post);
-  res.status(200).json(new ApiResponse(200, post, "post found successfully"));
+
+  res.status(200).render("read",{post})
 });
 const deletePost = asyncHandler(async (req, res) => {
   const postId = req.params.postId;
@@ -106,7 +107,7 @@ const getAllPost = asyncHandler(async (req, res) => {
      sortByField = sortBy;
    }
  
-   console.log(sortByField, sort);
+  
    const skip=(page - 1) * limit
    const post = await Post.aggregate([
      {
@@ -125,33 +126,37 @@ const getAllPost = asyncHandler(async (req, res) => {
      {
        $limit: limit, 
      },
+     {
+      $addFields: { "creationDate":  {$dateToString:{format: "%Y-%m-%d", date: "$createdAt"}}}
+    },
+     
+     
+     {
+      $project:{updatedAt:0,__v:0}
+    }
    ]);
- 
-   console.log(post);
-   res.status(200).json(new ApiResponse(200,post,"search result found"))
+   if(!post)
+    {
+      res.json(message="no post found")
+    }
+   
+   res.status(200).render("search",{post,query});
  } 
  catch (error) {
   res.status(500).json(new ApiResponse(500,error,"something went wrong while searching document"))
  }
 });
 const getAllMyPost=asyncHandler(async (req,res)=>{
-  let {userId} = req.user._id;
- 
-   let sort = 1;
-   let sortByField = "title";
-   
 
  
-  //  if (sortType === "desc") {
-  //    sort = -1;
-  //  }
- 
+
    
  
    console.log(sortByField, sort);
    try {
     const userId = req.user._id;
-  
+    let sort = 1;
+    let sortByField = "title";
     const posts = await Post.aggregate([
       {
         $match: {
@@ -162,21 +167,21 @@ const getAllMyPost=asyncHandler(async (req,res)=>{
         $sort: {
           [sortByField]: sort
         }
-      }
+      },
+      
     ]);
   
     console.log("User's Posts:", posts); 
-    res.status(200).json({success:true,data:posts,total:posts.length});
+  
     
   }
-   catch (error) {
+   
+  catch (error) {
     console.error("Error fetching user's posts:", error); 
     res.status(500).json(new ApiResponse(500,error,"error fetching user's posts"));
   }
   
 
-   console.log(post);
-   res.status(200).json(new ApiResponse(200,post,"search result found"))
 
 })
 

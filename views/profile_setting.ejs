@@ -1,0 +1,157 @@
+<%-include("header")-%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .profile img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    
+    .profile-info h3 {
+        margin: 0 0 5px;
+    }
+    
+    .profile-info p {
+        margin: 0;
+        color: #666;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        display: block;
+        font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    .profile {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.profile input[type="file"] {
+    position: absolute;
+    top: -1000px;
+}
+
+.profile-overlay {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-overlay img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: block;
+}
+
+.profile-overlay span {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: opacity 0.3s ease;
+}
+
+.profile-overlay:hover span {
+    opacity: 0;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <label for="profile-pic" class="profile">
+              
+                <div class="profile-overlay">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMUf5CWMCygVQ-cArMjMej_EynoGRaT32Y0Q&usqp=CAU" alt="Default Image">
+                    <span>Change Picture</span>
+
+                </div>
+                <input type="file" id="profile-pic" accept="image/*">
+            </label>
+            <div class="profile-info">
+                <h3>Username</h3>
+                <p>Email</p>
+            </div>
+        </div>
+    
+        <div class="form-container">
+            <form action="/api/v1/users/edit" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" name="email" fullname">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

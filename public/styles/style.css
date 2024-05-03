@@ -1,218 +1,171 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0; 
 }
 
-body {
-    /* height: 100vh; */
-    background-image: url("/images/icons-gray-bg.svg");
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    font-family: 'Roboto', sans-serif;
-    
+.navigation {
+  margin-top: 25px;
+  font-family: var(--font1);
+  /* height: 74px;  */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.container {
-    width: 30%;
-    height: 90%;
-    max-width: 90%;
-    /* display: flex; */
-    justify-content: space-evenly;
-    padding: 2rem 1rem;
-    border-radius: 1.5rem;
-    background-color: white;
-    z-index:1;
-    border:whitesmoke 2.5px solid;
-    box-shadow: whitesmoke;
-    
+.logo img{
+  border-radius: 50%;
 }
-
-.container .login{
-    
-   width: 100%;
-    
+.nav-right{
+  display: flex;
+  align-items: center;
 }
-.container form {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    
-  
+.nav-right input{
+  border-radius: 20px;
+  width:20vw;
+  text-align: center;
+  margin-left: 20px;
   
 }
-
-.container .container-header h2 {
-  
-   
-    
-    color: #222;
-   
+.nav-right input::placeholder{
+  font-size: 16px;
 }
-
-.container-header{
-    padding:5px;
-    margin-bottom:5vh ;
-    border-bottom: grey 1px solid;
-    height:20%;
+.form{
+  position: relative;
 }
-.container form .form-control {
-    width: 100%;
-    height: 50px;
-    background: white;
-    font-size: 14px;
-   
-    margin: 10px 0px 18px 0;
-    
-    padding:1rem 2rem;
-    width:100%;
-  
-   
-    text-indent: 20px;
-    outline: rgb(146, 146, 216);
-    
-    border:#2C4E80 solid 1px;
-
+.form i{
+  position: absolute;
+  top: 10px;
+  left: 30px;
 }
-input::placeholder{
-    font-size: large;
-}
-.glowing-border {
-    border: 2px solid #dadada; 
-    border-radius: 9px; 
-}
-
-.glowing-border:focus {
-    outline: none; 
-    border-color: #9ecaed;
-    box-shadow: 0 0 10px #9ecaed; 
-}
-.container form .btn {
-  
-    /* transform: translateX(-50%); */
-    width: 100%;
-    height: 40px;
-    padding: 10px 20px;
-    text-align: center;
-    border: none;
-    border-radius: 9px;
-    outline: none;
-    background:#2C4E80;
-    cursor: pointer;
-    text-transform: uppercase;
-    color: white;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.container form .btn:hover {
-   background-color:  #1c7dbd;
-}
-.container .login-footer h2{
-    display: flex;
-    flex-direction: row;
-  }
-  .container .login-footer h2:before, .container .login-footer h2:after{
-    content: "";
-    flex: 1 1;
-    border-bottom: 1px solid;
-    margin: auto;
-  }
-  .container .login-footer h2:before {
-    margin-right: 10px
-  }
-  .container .login-footer h2:after {
-    margin-left: 10px
-  }
-     
-     
-
-.container .login-footer > div {
-    
-    margin-top: 10px;
-    text-align: center;
-    
-
-
-}
-body > div > div.login-footer > div {
-    background-color: white;
-   
-    
-    
-    height:50px;
-}
-body > div > div.login-footer > div > img.login-icon{
-    height:50px;
-    display: inline;
-    background:none;
-    border-radius: 50%;
-    margin:10px;
-    
-   
-    
-}
-body > div > div.login-footer > div > img.login-icon:hover{
-    border:1px black solid;
-
-}
-body > div > div.login-footer >h3{
-    margin-top: 30px;
-    text-align: center;
-}
-/* .container .image{
-    width:40%;
-    
-    background-image: url(image1.jpg);
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center;
-    border-radius: 10px;
-    overflow: visible;
- 
-
-    */
-
-/* } */
-.input-container {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  .input-container .email-icon{
-    border-radius: 50%;
-    height: 80%;
-    aspect-ratio: 1;
-    position: absolute;
- left:5%;
-    top: 44%;
-    transform:translateX(-10%)
-  }
-
-  @media screen and (max-width: 768px) {
-    .container {
-        width: 90%;
-    }
-    .container .container-header{
-        text-align:center ;
-
-    }
-    input::placeholder{
-        font-size: medium;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .container {
-        width: 90%;
-        padding: 1rem;
-    }
+#user{
+  border-radius: 50%;
+  background-color: whitesmoke;
+  padding: 20px 21px;
 }
 
 
+.nav-left {
+  display: flex;
+  align-items: center;
+}
 
+.nav-left span {
+  font-size: 35px;
+  padding-top: 10px;
+}
 
+.nav-left ul {
+  display: flex;
+  align-items: center;
+  margin: 0 77px;
+  font-size: 22px;
+  padding-bottom: 23px;
+}
+
+.nav-left ul li {
+  list-style: none;
+  margin: 0 14px;
+  font-family: var(--font2);
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-left ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-left ul li a:hover {
+  color: var(--main-bg-color);
+  font-weight: bolder;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  margin-top: 32px;
+  padding: 9px;
+  position: relative;
+}
+
+.content::after {
+  content: "";
+  background-image: url("../img/11.svg");
+  position: absolute;
+  width: 100%;
+  height: inherit;
+  opacity: 0.15;
+  border-radius: 12px;
+}
+
+.content-left {
+  font-family: var(--font1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 49px;
+  z-index: 1;
+}
+
+.content-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-right img {
+  height: 355px;
+  border: 2px solid black;
+  border-radius: 200px;
+}
+
+.home-articles {
+  padding: 18px;
+  background-color: rgb(248, 239, 239, 0.5);
+  margin-top: 23px;
+  position: relative;
+}
+
+.year-box {
+  position: absolute;  
+  right: 0px;
+  top: 100px;
+  width: 234px;
+  height: 255px;
+  font-size: 18px;
+}
+
+.year-box div {
+  margin: 12px 0px;
+}
+
+.home-article {
+  display: flex;
+  margin: 25px;
+}
+
+.home-article img {
+  width: 300px;
+}
+
+.home-article-content {
+  align-self: center;
+  padding: 25px;
+}
+
+.home-article-content a {
+  text-decoration: none;
+  color: black;
+}
+/* .home-articles{} */
+.footer {
+  height: 50px;
+  background-color: var(--main-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+}
+
+.footer a {
+  color: white;
+}

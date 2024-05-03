@@ -1,0 +1,49 @@
+<%- include("header") -%>
+ 
+
+    <div class="max-width-1 m-auto"><hr></div>
+    <div class="home-articles max-width-1 m-auto font2">
+        
+        <h2>Search Results for <%= query%></h2>
+        <!-- <div class="year-box adjust-year">
+            <div>
+                <h3>Year </h3>
+            </div>
+            <!-- <div>
+                <input type="radio" name="year" id=""> 2020
+            </div>
+            <div>
+                <input type="radio" name="year" id=""> 2021
+            </div> -->
+        </div> -->
+       
+            
+            
+                    <% post.forEach(element => {%>
+                        <div class="home-article">
+                            <div class="home-article-img">
+                                <img src="/images/11.svg" alt="article">
+                                </div>
+                        <div class="home-article-content font1">
+                            <a href="getPost/<%=element._id %>">
+                    <h3><%=element.title%></h3>
+
+                    <span><%=element.author%></span>
+                <span>created at :<%=element.creationDate%> | 6 min read</span>
+                       </div>
+                    </div>/
+                     
+              <%  }); %></a>
+                
+                
+       
+      
+         
+    </div>
+
+    <div class="footer">
+        <p>Copyright &copy; iBlog.com </p>
+         <a href="https://www.vecteezy.com/free-vector/typewriter">Vector Credits: Vecteezy</a> 
+    </div>
+</body>
+</html>
