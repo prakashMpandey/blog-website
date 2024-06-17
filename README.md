@@ -1,4 +1,4 @@
-Blog Site Project
+
 This project is a blog site project. It allows users to create, read, update, and delete blog posts, as well as like and comment on posts.
 
 Technologies Used
