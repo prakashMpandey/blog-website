@@ -16,31 +16,41 @@ const createPost = asyncHandler(async (req, res) => {
   if (postImageLocalPath) {
     postImage = await uploadOnCloudinary(postImageLocalPath);
   }
-  console.log(postImage);
+ 
   const post = await Post.create({
     title: title,
     content: content,
     postImage: postImage?.url || "",
     author: req.user,
   });
+
   if (!post) {
     res.json(new ApiResponse(400, post, "post not uploaded"));
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, post, "post uploaded successfully"));
+    .redirect("/api/v1/home/");
 });
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.postId;
-
+const user=req.user
   if (!postId) {
     console.log("post id not found");
   }
   const post = await Post.findById(postId);
-  console.log(post);
+ const author=await User.findById(post.author).select({username:1})
 
-  res.status(200).render("read",{post})
+ 
+
+  res.status(200).render("read",{post,user,author})
 });
+
+// const updatePost=asyncHandler(async (req,res)=>{
+//   const postId=req.params.postId;
+//   console.log(postId)
+//   console.log(req.body)
+// })
+
 const deletePost = asyncHandler(async (req, res) => {
   const postId = req.params.postId;
 
@@ -58,12 +68,20 @@ const deletePost = asyncHandler(async (req, res) => {
 
   await Post.findByIdAndDelete(postId);
 
-  res.send(200, {}, "post deleted successfully");
-});
-const updatePost = asyncHandler(async (req, res) => {
-  const postId = req.params.postId;
+  res.status(200).redirect("/api/v1/post/myPosts");
 
+});
+
+
+const updatePost = asyncHandler(async (req, res) => {
+
+  const postId = req.params.postId;
   const { title, content } = req.body;
+  console.log(postId)
+ 
+
+  
+
 
   if (!postId) {
     console.log("post id not found");
@@ -76,14 +94,14 @@ const updatePost = asyncHandler(async (req, res) => {
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
     { $set: { title: title, content: content } },
-    { new: 0 }
+    { new:true}
   );
 
   if (!updatedPost) {
     console.log("some problem while changing");
   }
   console.log(updatedPost);
-  res.status(200).json(200, updatedPost, "post updated successfully");
+  res.status(200).redirect("/api/v1/post/myPosts") //.json(200, updatedPost, "post updated successfully");
 });
 const getAllPost = asyncHandler(async (req, res) => {
  try {
@@ -127,7 +145,7 @@ const getAllPost = asyncHandler(async (req, res) => {
        $limit: limit, 
      },
      {
-      $addFields: { "creationDate":  {$dateToString:{format: "%Y-%m-%d", date: "$createdAt"}}}
+      $addFields: { "creationDate":  {$dateToString:{format: "%d-%m-%Y", date: "$createdAt"}}}
     },
      
      
@@ -135,28 +153,33 @@ const getAllPost = asyncHandler(async (req, res) => {
       $project:{updatedAt:0,__v:0}
     }
    ]);
+   console.log(post)
    if(!post)
     {
       res.json(message="no post found")
     }
-   
-   res.status(200).render("search",{post,query});
+   const user=req.user
+   res.status(200).render("search",{post,query,user});
  } 
  catch (error) {
   res.status(500).json(new ApiResponse(500,error,"something went wrong while searching document"))
  }
 });
+
+
 const getAllMyPost=asyncHandler(async (req,res)=>{
 
  
 
    
  
-   console.log(sortByField, sort);
+   
    try {
-    const userId = req.user._id;
+    const user=req.user
+    const userId = user._id;
     let sort = 1;
     let sortByField = "title";
+    console.log(sortByField, sort);
     const posts = await Post.aggregate([
       {
         $match: {
@@ -168,10 +191,16 @@ const getAllMyPost=asyncHandler(async (req,res)=>{
           [sortByField]: sort
         }
       },
+      {
+        $project:{title:1,content:1,likes:1}
+      }
+     
       
     ]);
+    res.render("myPost",{user,posts})
   
-    console.log("User's Posts:", posts); 
+    // console.log("User's Posts:", posts,posts.length
+    // ); 
   
     
   }
@@ -185,4 +214,12 @@ const getAllMyPost=asyncHandler(async (req,res)=>{
 
 })
 
-export { createPost, getPost, deletePost, updatePost, getAllPost,getAllMyPost};
+const allPost=async function(){
+  return await Post.find()
+
+
+
+
+}
+
+export { allPost,createPost, getPost, deletePost, updatePost, getAllPost,getAllMyPost};

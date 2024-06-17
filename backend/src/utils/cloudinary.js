@@ -3,8 +3,8 @@ import fs from "fs";
 
 cloudinary.config({ 
  cloud_name:process.env.CLOUD_NAME, 
-  api_key: process.env.API_KEY, 
-  api_secret:process.env.CLOUDINARY_API_SECRET
+  api_key:process.env.API_KEY , 
+  api_secret:process.env.API_SECRET
 });
 
 const uploadOnCloudinary = async (localFilePath) => {
@@ -28,6 +28,19 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
+const deleteOnCloudinary= async(publicUrl) =>{
+try {
+        const publicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
+        console.log(publicId)
+        const response =await cloudinary.uploader.destroy(publicId, function(result) { console.log(result) });
+    
+        return response
+} catch (error) {
+    return error
+}
+
+}
 
 
-export { uploadOnCloudinary };
+
+export { uploadOnCloudinary,deleteOnCloudinary };

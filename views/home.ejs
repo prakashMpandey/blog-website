@@ -1,146 +1,68 @@
-<%- include("header") -%>
+<%- include("header",{user:user}) -%>
 
 
-<div class="max-width-1 m-auto">
-    <hr>
-</div>
-<div class="m-auto content max-width-1 my-2">
-    <div class="content-left">
-        <h1>The heaven for bloggers</h1>
-        <p>iBlog is a website which lets you submit an article which upon approval will be up on our website and you
-            can get a good amount of reach from here!</p>
-        <p>My Halloween decorations are staying in the box this year. To be honest, they didn’t make it out of the
-            box last year either. My Halloween spirit has officially been bludgeoned to death by teenagers who no
-            longer care and a persistent October fear of the Northern California wildfires. And speaking of fear,
-            isn’t there more than enough of that going around? Maybe all of us can pretend that Halloween isn’t even
-            happening this year?</p>
-    </div>
-    <div class="content-right">
-        <img src="img/home.svg" alt="iBlog">
-    </div>
-</div>
-
-<div class="max-width-1 m-auto">
-    <hr>
-</div>
-<div class="home-articles max-width-1 m-auto font2">
-    <h2>Featured Articles</h2>
-    <div class="year-box adjust-year">
-        <div>
-            <h3>Year </h3>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+        .blog-post {
+            background: #fff;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor:pointer;
+        }
+        .blog-post h2 {
+            margin-top: 0;
+        }
+        .blog-post p {
+            line-height: 1.6;
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <div class="container ">
+        <% blogs.forEach(blog => { %>
+        <div class="blog-post" data-id="<%= blog._id %>" onclick="postlink()">
+            <h2><%= blog.title %></h2>
+            <p><%= blog.content %></p>
+           
         </div>
-        <div>
-            <input type="radio" name="year" id=""> 2020
-        </div>
-        <div>
-            <input type="radio" name="year" id=""> 2021
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/3.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/1.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/2.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/1.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/11.svg" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/3.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/2.png" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
-    </div>
-    <div class="home-article">
-        <div class="home-article-img">
-            <img src="img/11.svg" alt="article">
-        </div>
-        <div class="home-article-content font1">
-            <a href="/blogpost.html">
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing.</h3>
-            </a>
-
-            <div>Author Name</div>
-            <span>07 January | 6 min read</span>
-        </div>
+        <% }); %>
     </div>
 
-</div>
-
-<%-include("footer")-%>
+</body>
+<script>
+   document.querySelectorAll('.blog-post').forEach(div => {
+            div.addEventListener('click', function() {
+                const postId = this.getAttribute('data-id');
+                window.location.href = `/api/v1/post/getPost/${postId}`;
+            });
+        });
+</script>
+</html>

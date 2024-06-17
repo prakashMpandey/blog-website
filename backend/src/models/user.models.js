@@ -30,8 +30,10 @@ const userSchema=new Schema({
     },
     avatar:{
         type:String,
-        // required:true
-    },
+        default:"https://res.cloudinary.com/dxcbmhy8f/image/upload/v1717675038/whccmwwbovuxjsu5w8jv.png"
+        }
+        
+    ,
     refreshToken:{
         type:String
     },

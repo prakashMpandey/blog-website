@@ -1,39 +1,114 @@
-<%- include("header") -%>
+<%- include("header",{user:user}) -%>
  
+<style>
+     body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+        .blog-post {
+            background: #fff;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .blog-post h2 {
+            margin-top: 0;
+        }
+        .blog-post p {
+            line-height: 1.6;
+        }
+        .blog-post-content {
+  align-self: center;
+  padding: 25px;
+}
 
-    <div class="max-width-1 m-auto"><hr></div>
-    <div class="home-articles max-width-1 m-auto font2">
-        
-        <h2>Search Results for <%= query%></h2>
-        <!-- <div class="year-box adjust-year">
-            <div>
-                <h3>Year </h3>
-            </div>
-            <!-- <div>
-                <input type="radio" name="year" id=""> 2020
-            </div>
-            <div>
-                <input type="radio" name="year" id=""> 2021
-            </div> -->
-        </div> -->
-       
-            
-            
-                    <% post.forEach(element => {%>
-                        <div class="home-article">
-                            <div class="home-article-img">
-                                <img src="/images/11.svg" alt="article">
-                                </div>
-                        <div class="home-article-content font1">
-                            <a href="getPost/<%=element._id %>">
-                    <h3><%=element.title%></h3>
+.blog-post a {
+  text-decoration: none;
+  color: black;
+}
+        .like-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            background: none;
+            color: #007BFF;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 1.2em;
+        }
+        .like-button i {
+            margin-right: 5px;
+        }
+        .like-button.liked {
+            color: #FF0000;
+            transform: scale(1.1);
+        }
+        .like-button:hover {
+            color: #0056b3;
+        }
+</style>
+    
+        <div class="container">
 
-                    <span><%=element.author%></span>
-                <span>created at :<%=element.creationDate%> | 6 min read</span>
+        <% if (post.length==0) {%>
+            <h2>No search Results found <%= query%></h2>
+           
+            </div> 
+           <% }  %>
+            <% post.forEach(element => {%>
+                        <div class="blog-post font1">
+                        <a href="getPost/<%=element._id %>">
+                        <div class="blog-post-content">
+                            
+                        
+                           
+                         <h2 style="text-align:start;  margin-bottom: 20px; text-decoration:underline;"><%=element.title%></h2>
+                         <%const content=element.content.split(" ")%>
+                        <%var limit=100%>
+                        <% var paragraph %>
+                        <% content.forEach((e)=>{ %>
+                        
+                            <% if ((paragraph + e).split(' ').length <= limit){ %>
+                                <% paragraph+=e+" "%>
+                               <% }%>
+
+
+
+                      <%  }) %>
+                      <p><%= paragraph%>.</p>
+                            
+                            
+
+
+                    <span> By <%=element.author%></span>
+                <span> created at :<%=element.creationDate%> | 6 min read</span>
                        </div>
-                    </div>/
+                    </div></a>
                      
-              <%  }); %></a>
+              <%  }); %>
                 
                 
        
@@ -41,9 +116,6 @@
          
     </div>
 
-    <div class="footer">
-        <p>Copyright &copy; iBlog.com </p>
-         <a href="https://www.vecteezy.com/free-vector/typewriter">Vector Credits: Vecteezy</a> 
-    </div>
+   
 </body>
 </html>

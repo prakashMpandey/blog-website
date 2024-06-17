@@ -1,4 +1,11 @@
-<%- include("header") -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="\styles\login.css" type="text/css" />
+</head>
+<body>
   <div class="container">
     
     <div class="login">
@@ -17,10 +24,14 @@
           <label for="">Password</label>
           <!-- <span class="email-icon"><i class="fa-solid fa-lock"></i></span> -->
           <input type="password" name="password" class="form-control glowing-border" required>
+          <div id="error-message" style="color: red; margin-top: 0px;">
+            <%= errorMessage %>
+          </div>
       </div>
-
+     
       <button type="submit" class="btn">Sign In</button>
   </form>
+ 
 </div>
      <div class="login-footer">
       <h2 >or continue with</h2>
@@ -35,3 +46,4 @@
   </div>
 </body>
 </html>
+  

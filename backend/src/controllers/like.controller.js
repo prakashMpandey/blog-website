@@ -15,27 +15,57 @@ const likePost = asyncHandler(async (req, res) => {
     return res.status(400).json(new ApiResponse(400, {}, "Post ID not found"));
   }
 
-  console.log(postId, userId);
+  
   const existingLike = await Like.findOne({ post: postId, author: userId });
-  console.log(existingLike, "Existing like found");
+ 
 
   if (existingLike) {
     await Like.findByIdAndDelete(existingLike._id);
 
-    await Post.findByIdAndUpdate(postId, { $inc: { likes: -1 } });
+   const post= await Post.findByIdAndUpdate(postId, [{
+    $set:{
+      likes:{
+        $max:[
+          {
+            $add:["$likes",-1]
+          }
+          ,0
+          
+        ]
+
+      }
+    }}
+   ],{new:true});
 
     return res
       .status(200)
-      .json(new ApiResponse(200, {}, "Like removed successfully"));
+      .json( {likes:post.likes, message:"Like removed successfully"});
   }
 
-  const like = await Like.create({ post: postId, author: req.user });
+   await Like.create({ post: postId, author: req.user });
 
-  await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 } });
+ const post= await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 } },{new:true});
 
-  console.log(like);
 
-  res.status(200).json(new ApiResponse(200, like, "Post liked successfully"));
+  res.status(200).json({likes:post.likes,message:"liked"});
 });
 
-export { likePost };
+
+const isLikedPost=asyncHandler(async (req,res)=>{
+
+  const postId=req.params.postId
+  const userId=req.user._id
+  if(!postId)
+    {
+      console.log("post id not found")
+    }
+    const isAlreadyLiked = await Like.findOne({ post: postId, author: userId });
+    if(isAlreadyLiked)
+      {
+        return res.json({isAlreadyLiked:true})
+      }
+ else{
+  return res.json({isAlreadyLiked:false})
+ }
+})
+export { likePost ,isLikedPost};

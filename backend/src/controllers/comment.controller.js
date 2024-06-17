@@ -11,9 +11,11 @@ const publishComment = asyncHandler(async (req, res) => {
     if (!postId) {
       return res.status(400).json({ message: "Post ID is required." });
     }
+
     if (!content) {
       return res.status(400).json({ message: "Comment content is required." });
     }
+
     const comment = await Comment.create({
       content: content,
       author: req.user,
@@ -26,12 +28,15 @@ const publishComment = asyncHandler(async (req, res) => {
 
     return res
       .status(200)
-      .json(new ApiResponse(200, comment, "comment puclished successfully"));
-  } catch (error) {
+      .json(new ApiResponse(200, {comment:comment.content,author:comment.author.username,avatar:comment.author.avatar,id:comment._id}, "comment puclished successfully"));
+  }
+  catch (error) {
     console.error("Error publishing comment:", error);
     return res.status(500).json({ message: "Internal server error." });
   }
 });
+
+
 const updateComment = asyncHandler(async (req, res) => {
   const { postId, commentId } = req.params;
   const content = req.body.content;
@@ -92,14 +97,17 @@ const getAllComments = asyncHandler(async (req, res) => {
     }
     
       
-      const comments = await Comment.find({ post: postId }).skip(skip).limit(limit);
-    
+      const comments = (await Comment.find({ post: postId }).skip(skip).limit(limit).populate("author","username avatar"));
+  
       if(!comments)
       {
         return res.status(404).json({ message: "No comments found for the specified post." });
       }
+      comments.forEach((comment)=>{
+        console.log(comment)
+      })
       
-      res.status(200).json({comments,message:'comments fetched successfully',totalComments:comments.length})
+      res.status(200).json(new ApiResponse(200,{comments}))
 } catch (error) {
     res.status(500).json({success:"false",message:"internal server error while fetching comments"})
 }

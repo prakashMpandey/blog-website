@@ -8,7 +8,7 @@ const router=Router()
 router.route("/:postId/comment").post(verifyJWT,publishComment)
 
 router.route("/:postId/comments").get(verifyJWT,getAllComments)
-router.route("/:postId/comment/update/:commentId").post(verifyJWT,updateComment)
-router.route("/:postId/comment/delete/:commentId").post(verifyJWT,deleteComment)
+router.route("/:postId/comment/update/:commentId").put(verifyJWT,updateComment)
+router.route("/:postId/comment/delete/:commentId").delete(verifyJWT,deleteComment)
 
 export default router

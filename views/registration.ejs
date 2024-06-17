@@ -1,75 +1,83 @@
-<%- include("header") -%>
-    
-  </head>
-  <body>
-    <div class="container">
-      <div class="login">
-        <form action="/api/v1/users/register" method="post">
-          <div class="container-header"><h2>Sign Up a New Account</h2></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="\styles\login.css" type="text/css" /> 
+  
+  
 
-          <div class="input-container">
-            <label for="email">Email</label><br />
+</head>
+<body>
+  <div class="container">
+    <div class="login">
+      <form method="post" action="register">
+        <div class="container-header"><h2>Sign Up a New Account</h2></div>
 
-            <input
-              type="text "
-              name="email"
-              class="form-control glowing-border"
-              placeholder="enter your email"
-              autocomplete="off"
-              required
-            />
-
-            <label for="username">username</label><br />
-
-            <input
-              type="text "
-              name="username"
-              class="form-control glowing-border"
-              placeholder="enter your username"
-              autocomplete="off"
-              required
-            />
-
-            <label for="fullname">fullname</label><br />
-
-            <input
-              type="text"
-              name="fullname"
-              class="form-control glowing-border"
-              placeholder="enter your full name"
-              autocomplete="off"
-              required
-            />
-          </div>
-          <div class="input-container email-icon">
-            <label for="password">Password</label>
+        <div class="input-container">
+          <label for="email">Email</label><br />
+          <input
+            type="text"
+            name="email"
+            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+            title="email must be like abc@gmail.com"
+            class="form-control glowing-border"
+            placeholder="Enter your email"
+            autocomplete="off"
+            required
             
-            <input
-            name="password"
-              type="password"
-              class="form-control glowing-border"
-              required
-            />
-          </div>
+          />
 
-          <button type="submit" class="btn">Sign UP</button>
-        </form>
-      </div>
-      <div class="login-footer">
-        <h2>or continue with</h2>
+          <label for="username">Username</label><br />
+          <input
+            type="text"
+            name="username"
+            class="form-control glowing-border"
+            placeholder="Enter your username"
+            autocomplete="off"
+            required
+          />
 
-        <div class="logo-line">
-          <img class="login-icon" src="\images\OIP.jfif" alt="Google Logo" />
-          <img
-            class="login-icon"
-            src="\images\facebook.jfif"
-            alt="Facebook Logo"
+          <label for="fullname">Fullname</label><br />
+          <input
+            type="text"
+            name="fullname"
+            class="form-control glowing-border"
+            placeholder="Enter your full name"
+            autocomplete="off"
+            required
           />
         </div>
-        <h3>
-          Already have an Account <a href="login">Sign in Here</a>
-        </h3>
+
+        <div class="input-container email-icon">
+          <label for="password">Password</label>
+          <input
+            name="password"
+            type="password"
+            class="form-control glowing-border"
+            placeholder="Enter your password"
+        
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn">Sign UP</button>
+      </form>
+      <div id="error-message" style="color: red; margin-top: 10px;">
+        <%= errorMessage %>
       </div>
     </div>
-  </body>
+    <div class="login-footer">
+      <h2>or continue with</h2>
+      <div class="logo-line">
+        <img class="login-icon" src="\images\OIP.jfif" alt="Google Logo" />
+        <img class="login-icon" src="\images\facebook.jfif" alt="Facebook Logo" />
+      </div>
+      <h3>
+        Already have an Account? <a href="login">Sign in Here</a>
+      </h3>
+    </div>
+  </div>
+</body>
 </html>
