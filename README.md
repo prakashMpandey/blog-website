@@ -1,4 +1,4 @@
-# Blog Site
+# Madhyam (A multiuser blog/article sharing platform )
 
 A modern web application for creating and managing blog posts. Users can write, edit, delete, and view blog posts, as well as manage their profiles.
 
